@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"JWT/models"
+	"go-login/models"
 	"log"
 	"net/http"
 	"time"

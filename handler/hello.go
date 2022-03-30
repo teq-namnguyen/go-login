@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"JWT/models"
 	"fmt"
+	"go-login/models"
 	"net/http"
 
 	"github.com/golang-jwt/jwt"
