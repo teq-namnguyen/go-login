@@ -1,4 +1,4 @@
-module JWT
+module go-login
 
 go 1.17
 

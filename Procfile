@@ -1,0 +1,1 @@
+echo "web: go-login" > Procfile
