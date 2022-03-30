@@ -3,6 +3,7 @@ package main
 import (
 	"go-login/handler"
 	mdw "go-login/middleware"
+	"os"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -17,5 +18,5 @@ func main() {
 	server.GET("/", handler.Hello, isLoggedIn)
 	server.POST("/login", handler.Login, middleware.BasicAuth(mdw.BasicAuth))
 	server.GET("/admin", handler.Hello, isLoggedIn, isAdmin)
-	server.Logger.Fatal(server.Start(":8080"))
+	server.Logger.Fatal(server.Start(":" + os.Getenv("PORT")))
 }
