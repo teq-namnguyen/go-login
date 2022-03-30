@@ -1,1 +1,1 @@
-echo "web: go-login" > Procfile
+echo "web: server" > Procfile
