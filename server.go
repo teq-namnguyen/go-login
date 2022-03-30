@@ -17,5 +17,5 @@ func main() {
 	server.GET("/", handler.Hello, isLoggedIn)
 	server.POST("/login", handler.Login, middleware.BasicAuth(mdw.BasicAuth))
 	server.GET("/admin", handler.Hello, isLoggedIn, isAdmin)
-	server.Logger.Fatal(server.Start(":80"))
+	server.Logger.Fatal(server.Start(":8080"))
 }
