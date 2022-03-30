@@ -1,8 +1,8 @@
 package main
 
 import (
-	"JWT/handler"
-	mdw "JWT/middleware"
+	"go-login/handler"
+	mdw "go-login/middleware"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
