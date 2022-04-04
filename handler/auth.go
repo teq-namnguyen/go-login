@@ -20,12 +20,12 @@ func Login(c echo.Context) error {
 	}
 	user, err := db.GetUserByUserName(u.Username)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(u.Password))
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	token := jwt.New(jwt.SigningMethodHS256)
@@ -59,13 +59,13 @@ func SignIn(c echo.Context) error {
 	}
 	err = utils.HashPasswordBscrypt(u)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	err = db.AddUserNamePass(u)
 	if err != nil {
-		log.Fatalf("%#v", err.Error())
+		log.Printf("%#v", err.Error())
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, u)

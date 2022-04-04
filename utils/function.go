@@ -11,7 +11,8 @@ func HashPasswordBscrypt(user *models.UserLogin) error {
 	passwordByte := []byte(user.Password)
 	hashedPassword, err := bcrypt.GenerateFromPassword(passwordByte, bcrypt.DefaultCost)
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Print(err.Error())
+		return err
 	}
 	user.Password = string(hashedPassword)
 	return nil

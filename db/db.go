@@ -27,7 +27,8 @@ func OpenDB() error {
 func AddToken(token string, time time.Time) error {
 	result := DB.Create(&models.Tokens{Token: token, Exp: time})
 	if result.Error != nil {
-		log.Fatal(result.Error)
+		log.Print(result.Error)
+		return result.Error
 	}
 	return nil
 }
@@ -35,7 +36,8 @@ func AddToken(token string, time time.Time) error {
 func AddUserNamePass(user *models.UserLogin) error {
 	result := DB.Create(user)
 	if result.Error != nil {
-		log.Fatal(result.Error)
+		log.Print(result.Error)
+		return result.Error
 	}
 	return nil
 }
@@ -55,7 +57,8 @@ func GetUserByUserName(username string) (*models.UserLogin, error) {
 
 	result := DB.Find(&user, "username = ?", username)
 	if result.Error != nil {
-		log.Fatal(result.Error)
+		log.Print(result.Error)
+		return nil, result.Error
 	}
 	return &user, nil
 }
