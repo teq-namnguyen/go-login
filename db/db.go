@@ -17,6 +17,7 @@ func OpenDB() error {
 	// dns := "host=localhost user=postgres dbname=login_db port=5432 sslmode=disable TimeZone=Asia/Shanghai"
 	var err error
 	DB, err = gorm.Open(postgres.Open(os.Getenv("DATABASE_URL")), &gorm.Config{})
+	// DB, err = gorm.Open(postgres.Open(dns), &gorm.Config{})
 	if err != nil {
 		return err
 	}
@@ -46,7 +47,7 @@ func CheckUserIsNotExist(username string) error {
 	if result.Error != nil {
 		return nil
 	}
-	return errors.New("error")
+	return errors.New("error username is exist")
 }
 
 func GetUserByUserName(username string) (*models.UserLogin, error) {

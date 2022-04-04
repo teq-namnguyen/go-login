@@ -21,10 +21,12 @@ func Login(c echo.Context) error {
 	user, err := db.GetUserByUserName(u.Username)
 	if err != nil {
 		log.Fatal(err)
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(u.Password))
 	if err != nil {
 		log.Fatal(err)
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
@@ -35,7 +37,7 @@ func Login(c echo.Context) error {
 	t, err := token.SignedString([]byte("key"))
 	if err != nil {
 		log.Printf("signed token err %v\n", err)
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	db.AddToken(t, timeExp.UTC())
 	return c.JSON(http.StatusOK, &models.Tokens{
@@ -52,16 +54,19 @@ func SignIn(c echo.Context) error {
 	err := db.CheckUserIsNotExist(u.Username)
 	log.Print(err)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, u.Username)
+		// return c.JSON(http.StatusBadRequest, u.Username)
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	err = utils.HashPasswordBscrypt(u)
 	if err != nil {
 		log.Fatal(err)
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	err = db.AddUserNamePass(u)
 	if err != nil {
 		log.Fatalf("%#v", err.Error())
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
-	return c.JSON(http.StatusOK, u.Username)
+	return c.JSON(http.StatusOK, u)
 }
